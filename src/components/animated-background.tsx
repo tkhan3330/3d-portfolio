@@ -142,8 +142,7 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
 
     // Section transitions
     return [
-      createSectionTimeline("#skills", "skills", "hero"),
-      createSectionTimeline("#projects", "projects", "skills", "top 70%"),
+      createSectionTimeline("#projects", "projects", "hero", "top 70%"),
       createSectionTimeline("#contact", "contact", "projects", "top 30%"),
     ].filter(Boolean) as gsap.core.Timeline[];
   };
@@ -481,15 +480,23 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Spline
-        className="w-full h-full fixed"
-        ref={splineContainer}
-        onLoad={(app: Application) => {
-          setSplineApp(app);
-          bypassLoading();
+      <div
+        className="fixed inset-0 pointer-events-none z-[0]"
+        style={{
+          opacity: activeSection === "hero" ? 1 : activeSection === "projects" ? 0.25 : 0.05,
+          transition: "opacity 0.8s ease-in-out",
         }}
-        scene="/assets/skills-keyboard.spline"
-      />
+      >
+        <Spline
+          className="w-full h-full"
+          ref={splineContainer}
+          onLoad={(app: Application) => {
+            setSplineApp(app);
+            bypassLoading();
+          }}
+          scene="/assets/skills-keyboard.spline"
+        />
+      </div>
     </Suspense>
   );
 };

@@ -27,7 +27,7 @@ const SectionWrapper = ({ id, className, children, ...props }: SectionWrapperPro
     >
       <motion.div
         style={{ opacity, scale }}
-        className="w-full h-full"
+        className="w-full"
       >
         {children}
       </motion.div>

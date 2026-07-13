@@ -1,45 +1,42 @@
 const config = {
-  title: "Naresh Khatri | Full-Stack Developer",
+  title: "Tauseef Khan | PGT Mathematics Educator & EdTech Innovator",
   description: {
-    long: "Explore the portfolio of Naresh, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and innovative projects. Discover my latest work, including Coding Ducks, The Booking Desk, Ghostchat, and more. Let's build something amazing together!",
+    long: "Explore the portfolio of Tauseef Khan, a CBSE Class XI & XII Mathematics educator, trainer, and creative technologist from India. Discover tools like Lesson Plan Maker, AI Self Observation, Code to Class, and more, showing how AI and technology redefine modern pedagogy.",
     short:
-      "Discover the portfolio of Naresh, a full-stack developer creating interactive web experiences and innovative projects.",
+      "Portfolio of Tauseef Khan, PGT Mathematics educator, trainer, and educational technology innovator.",
   },
   keywords: [
-    "Naresh",
-    "portfolio",
-    "full-stack developer",
-    "creative technologist",
-    "web development",
-    "3D animations",
-    "interactive websites",
-    "Coding Ducks",
-    "The Booking Desk",
-    "Ghostchat",
-    "web design",
-    "GSAP",
-    "React",
-    "Next.js",
-    "Spline",
-    "Framer Motion",
+    "Tauseef Khan",
+    "Mathematics Teacher",
+    "CBSE Mathematics PGT",
+    "Class XI Mathematics",
+    "Class XII Mathematics",
+    "AI in Education",
+    "EdTech Creator",
+    "Lesson Plan Maker",
+    "Sunbeam Pedagogy",
+    "Teacher Trainer",
+    "Classroom Innovation",
+    "Digital Education India",
+    "Creative Educator",
   ],
-  author: "Naresh Khatri",
-  email: "naresh.khatri2345@gmail.com",
-  site: "https://nareshkhatri.site",
+  author: "Tauseef Khan",
+  email: "tauseefk098@gmail.com",
+  site: "https://tauseefkhan.math",
 
-  // for github stars button
-  githubUsername: "naresh-khatri",
-  githubRepo: "3d-portfolio",
+  // Set to empty to hide the generic GitHub stars button from the header
+  githubUsername: "",
+  githubRepo: "",
 
   get ogImg() {
     return this.site + "/assets/seo/og-image.png";
   },
   social: {
-    twitter: "https://x.com/nothotchaddi",
-    linkedin: "https://www.linkedin.com/in/naresh-khatri/",
-    instagram: "https://www.instagram.com/hotchaddi",
-    facebook: "https://www.facebook.com/HotChaddi/",
-    github: "https://github.com/Naresh-Khatri",
+    twitter: "",
+    linkedin: "https://www.linkedin.com/in/tauseef-khan-edu/",
+    instagram: "https://www.instagram.com/tauseefkhan.math",
+    facebook: "https://www.facebook.com/tauseefroxx/",
+    github: "https://github.com/tkhan3330",
   },
 };
 export { config };
