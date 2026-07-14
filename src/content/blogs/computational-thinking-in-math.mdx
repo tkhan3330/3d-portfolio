@@ -1,0 +1,44 @@
+---
+title: "Computational Thinking in the Math Classroom: Why Every Student Should Code a Little"
+publishedAt: "2026-07-06"
+summary: "Coding is not just for computer science students. A few lines of Python can deepen mathematical intuition and teach problem decomposition that transfers to every subject."
+image: "/blog-thumbnails/computational-thinking.svg"
+author: "Tauseef Khan"
+tags: ["Computational Thinking", "Python", "Pedagogy", "AI Readiness"]
+---
+
+# Computational Thinking in the Math Classroom: Why Every Student Should Code a Little
+
+There is a common misconception that coding belongs only in the computer lab. In my experience teaching CBSE mathematics, a small dose of programming does more for mathematical understanding than an extra worksheet ever could.
+
+Computational thinking is not about producing software. It is about learning to break a problem into steps, spot patterns, and describe a process precisely. Those are mathematical habits of mind.
+
+## The Four Pillars
+
+I introduce computational thinking through four simple ideas that map cleanly onto mathematics:
+
+- **Decomposition**: Break a large problem into smaller solvable parts, exactly like splitting a proof into cases.
+- **Pattern Recognition**: Notice repetition, which is the seed of every summation and sequence.
+- **Abstraction**: Ignore irrelevant detail and keep the structure, the essence of defining a function.
+- **Algorithms**: Write a clear, ordered set of steps that anyone could follow.
+
+## Ten Lines of Python, One Big Idea
+
+Consider teaching the concept of a limit through a Riemann sum. Instead of describing convergence in words, students write a short loop:
+
+```python
+def riemann_sum(f, a, b, n):
+    width = (b - a) / n
+    total = 0
+    for i in range(n):
+        total += f(a + i * width) * width
+    return total
+```
+
+Then they run it with `n = 10`, `n = 100`, and `n = 1000`, and watch the result creep toward the true area. The abstract phrase "as n approaches infinity" suddenly has evidence behind it.
+
+## It Is Not About Making Programmers
+
+Most of my students will not become software engineers, and that is fine. The goal is transferable thinking. A student who can decompose a coding problem can decompose a word problem. A student who debugs a loop learns to check their own reasoning for errors.
+
+Aligning with the NEP 2020 emphasis on computational thinking and AI readiness, I believe every mathematics classroom should make room for a little code. Not to chase trends, but because it makes the mathematics itself clearer.

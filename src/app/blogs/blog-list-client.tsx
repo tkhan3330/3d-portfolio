@@ -76,11 +76,20 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
             className="mb-16"
           >
             <Link href={`/blogs/${featured.slug}`} className="group block">
-              <div className="relative border border-border/50 rounded-2xl p-8 md:p-12 overflow-hidden transition-colors hover:border-[hsl(20,100%,70%)]/30 bg-card/30 backdrop-blur-sm">
-                {/* Corner accent */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[hsl(20,100%,70%)]/10 to-transparent rounded-bl-full" />
+              <div className="relative border border-border/50 rounded-2xl overflow-hidden transition-colors hover:border-[hsl(20,100%,70%)]/30 bg-card/30 backdrop-blur-sm grid md:grid-cols-2">
+                {/* Thumbnail */}
+                {featured.metadata.image && (
+                  <div className="relative aspect-[16/10] md:aspect-auto md:h-full overflow-hidden">
+                    <img
+                      src={featured.metadata.image}
+                      alt={featured.metadata.title}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-card/70 via-transparent to-transparent" />
+                  </div>
+                )}
 
-                <div className="relative">
+                <div className="relative p-8 md:p-10 flex flex-col justify-center">
                   <div className="flex items-center gap-4 mb-6 text-sm text-muted-foreground font-sans">
                     <span className="text-[hsl(20,100%,70%)] font-medium tracking-[0.15em] uppercase text-xs">
                       Featured
@@ -151,7 +160,17 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
               }}
             >
               <Link href={`/blogs/${post.slug}`} className="group block h-full">
-                <div className="h-full border border-border/50 rounded-xl p-6 md:p-8 transition-all duration-300 hover:border-[hsl(20,100%,70%)]/30 hover:bg-card/40 bg-card/20 backdrop-blur-sm">
+                <div className="h-full flex flex-col border border-border/50 rounded-xl overflow-hidden transition-all duration-300 hover:border-[hsl(20,100%,70%)]/30 hover:bg-card/40 bg-card/20 backdrop-blur-sm">
+                  {post.metadata.image && (
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <img
+                        src={post.metadata.image}
+                        alt={post.metadata.title}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-6 md:p-7">
                   <div className="flex items-center gap-3 mb-4 text-xs text-muted-foreground font-sans">
                     <span className="flex items-center gap-1.5">
                       <CalendarDays className="w-3 h-3" />
@@ -185,6 +204,7 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
                       ))}
                     </div>
                     <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-[hsl(20,100%,70%)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  </div>
                   </div>
                 </div>
               </Link>

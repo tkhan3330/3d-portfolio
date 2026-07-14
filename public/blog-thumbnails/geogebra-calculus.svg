@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" fill="none">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#042f2e"/>
+      <stop offset="0.55" stop-color="#0d9488"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientTransform="translate(180 80) rotate(50) scale(340)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#99f6e4" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#99f6e4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg2)"/>
+  <rect width="800" height="450" fill="url(#grid2)"/>
+  <rect width="800" height="450" fill="url(#glow2)"/>
+
+  <!-- axes -->
+  <g stroke="#ccfbf1" stroke-opacity="0.5" stroke-width="2">
+    <line x1="90" y1="360" x2="720" y2="360"/>
+    <line x1="150" y1="410" x2="150" y2="70"/>
+  </g>
+
+  <!-- curve (parabola-ish) -->
+  <path d="M110 400 Q 340 40 720 120" stroke="#f0fdfa" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- tangent line -->
+  <line x1="330" y1="300" x2="620" y2="120" stroke="#fde68a" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round"/>
+  <!-- point of tangency -->
+  <circle cx="475" cy="210" r="11" fill="#fde68a"/>
+  <circle cx="475" cy="210" r="20" fill="none" stroke="#fde68a" stroke-opacity="0.5" stroke-width="2"/>
+
+  <text x="60" y="410" font-family="'Segoe UI', Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="4" fill="#ffffff" fill-opacity="0.9">GEOGEBRA · CALCULUS</text>
+</svg>

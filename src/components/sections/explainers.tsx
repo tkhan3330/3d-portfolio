@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import SectionWrapper from "../ui/section-wrapper";
 import { SectionHeader } from "./section-header";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { shimmerDataURL } from "@/lib/shimmer";
+import { useLightbox } from "@/hooks/use-lightbox";
 import { Play, X, Video, Sparkles, GraduationCap } from "lucide-react";
 
 type ExplainerVideo = {
@@ -54,8 +57,13 @@ const VIDEOS_DATA: ExplainerVideo[] = [
 const AIExplainersSection = () => {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
+  useLightbox({
+    active: activeVideo !== null,
+    onClose: () => setActiveVideo(null),
+  });
+
   return (
-    <SectionWrapper id="explainers" className="py-24 w-full bg-secondary/5">
+    <SectionWrapper id="explainers" className="py-14 md:py-24 w-full bg-secondary/5">
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
         <SectionHeader
           id="explainers"
@@ -81,10 +89,14 @@ const AIExplainersSection = () => {
               >
                 {/* Thumbnail Header with Play Button */}
                 <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/30 bg-background/50 flex items-center justify-center">
-                  <img
+                  <Image
                     src={video.thumbnail}
                     alt={video.title}
-                    className="absolute inset-0 h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    placeholder="blur"
+                    blurDataURL={shimmerDataURL()}
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                   <div className="absolute inset-0 bg-black/45 group-hover:bg-black/55 transition-colors duration-300 flex items-center justify-center z-10">
                     <Button

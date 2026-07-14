@@ -4,9 +4,17 @@ import styles from "./style.module.scss";
 import { blur, translate } from "../../anim";
 import { Link as LinkType } from "@/types";
 import { cn } from "@/lib/utils";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useParams, usePathname } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import FunnyThemeToggle from "@/components/theme/funny-theme-toggle";
+import { useActiveSection } from "@/hooks/use-active-section";
+
+/** Map a nav href to the id of the section it points to on the home page. */
+function hrefToSectionId(href: string): string | null {
+  if (href === "/") return "hero";
+  if (href.startsWith("/#")) return href.slice(2);
+  return null;
+}
 
 interface SelectedLink {
   isActive: boolean;
@@ -27,12 +35,30 @@ export default function Body({
   setIsActive,
 }: BodyProps) {
   const params = useParams();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [currentHref, setCurrentHref] = useState("/");
   useEffect(() => {
     if (typeof window === "undefined") return;
     const { pathname, hash } = window.location;
     setCurrentHref(pathname + hash);
   }, [params]);
+
+  // Scroll-spy: on the home page, highlight the link whose section is in view.
+  const sectionIds = useMemo(
+    () =>
+      isHome
+        ? Array.from(
+            new Set(
+              links
+                .map((l) => hrefToSectionId(l.href))
+                .filter((id): id is string => id !== null)
+            )
+          )
+        : [],
+    [isHome, links]
+  );
+  const activeSection = useActiveSection(sectionIds);
 
   const getChars = (word: string) => {
     let chars: React.JSX.Element[] = [];
@@ -59,6 +85,11 @@ export default function Body({
       <FunnyThemeToggle className="w-6 h-6 mr-6 flex md:hidden" />
       {links.map((link, index) => {
         const { title, href, target } = link;
+        const sectionId = hrefToSectionId(href);
+        const isActive =
+          isHome && activeSection
+            ? sectionId === activeSection
+            : currentHref === href;
 
         return (
           <Link
@@ -69,8 +100,8 @@ export default function Body({
           >
             <motion.p
               className={cn(
-                "font-display rounded-lg",
-                currentHref !== href ? "text-muted-foreground" : "underline"
+                "font-display rounded-lg transition-colors",
+                isActive ? "text-foreground underline" : "text-muted-foreground"
               )}
               onClick={() => setIsActive(false)}
               onMouseOver={() => setSelectedLink({ isActive: true, index })}

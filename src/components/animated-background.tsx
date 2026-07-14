@@ -515,9 +515,23 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
  * runtime chunk + scene before detection has run; the Preloader bypasses its
  * splash when 3D is disabled.
  */
+/**
+ * Lightweight stand-in shown wherever the WebGL scene is skipped (phones,
+ * reduced-motion, Data Saver). Pure CSS — a couple of soft, theme-aware glows
+ * so the hero never feels stark, at effectively zero runtime cost. Matches the
+ * 3D scene's fixed / pointer-events-none / z-0 layering.
+ */
+const StaticBackdrop = () => (
+  <div aria-hidden className="fixed inset-0 pointer-events-none z-[0] overflow-hidden">
+    <div className="absolute -top-[15%] left-1/2 h-[60vh] w-[120vw] -translate-x-1/2 rounded-full bg-primary/[0.07] blur-[110px]" />
+    <div className="absolute bottom-[-10%] right-[-10%] h-[45vh] w-[70vw] rounded-full bg-primary/[0.05] blur-[100px]" />
+  </div>
+);
+
 const AnimatedBackground = () => {
   const { disable3D, maxDpr, ready } = usePerfProfile();
-  if (!ready || disable3D) return null;
+  if (!ready) return null;
+  if (disable3D) return <StaticBackdrop />;
   return <KeyboardScene maxDpr={maxDpr} />;
 };
 

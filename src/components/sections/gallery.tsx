@@ -5,6 +5,7 @@ import SectionWrapper from "../ui/section-wrapper";
 import { SectionHeader } from "./section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useLightbox } from "@/hooks/use-lightbox";
 import { Eye, X, ChevronLeft, ChevronRight, GraduationCap, Sparkles, Award, Layers, Star, Newspaper } from "lucide-react";
 
 // --- Photo Databases matching your actual files in public/Certificates ---
@@ -77,17 +78,32 @@ const EventGallerySection = () => {
     setLightboxIdx(index);
   };
 
-  const handlePrevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const goPrev = () => {
     if (!lightboxEvent) return;
     setLightboxIdx((prev) => (prev === 0 ? activePhotos.length - 1 : prev - 1));
   };
 
-  const handleNextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const goNext = () => {
     if (!lightboxEvent) return;
     setLightboxIdx((prev) => (prev === activePhotos.length - 1 ? 0 : prev + 1));
   };
+
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    goPrev();
+  };
+
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    goNext();
+  };
+
+  const { swipeHandlers } = useLightbox({
+    active: lightboxEvent !== null,
+    onPrev: activePhotos.length > 1 ? goPrev : undefined,
+    onNext: activePhotos.length > 1 ? goNext : undefined,
+    onClose: () => setLightboxEvent(null),
+  });
 
   // Handlers for manual card slides
   const nextSlide = (e: React.MouseEvent, len: number, setter: React.Dispatch<React.SetStateAction<number>>) => {
@@ -100,7 +116,7 @@ const EventGallerySection = () => {
   };
 
   return (
-    <SectionWrapper id="gallery" className="py-24 bg-secondary/5 w-full">
+    <SectionWrapper id="gallery" className="py-14 md:py-24 bg-secondary/5 w-full">
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
         <SectionHeader
           id="gallery"
@@ -141,7 +157,7 @@ const EventGallerySection = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={(e) => prevSlide(e, CBSE_PHOTOS.length, setCbseIdx)}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -149,7 +165,7 @@ const EventGallerySection = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={(e) => nextSlide(e, CBSE_PHOTOS.length, setCbseIdx)}
               >
                 <ChevronRight className="w-4 h-4" />
@@ -200,7 +216,7 @@ const EventGallerySection = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={(e) => prevSlide(e, CARNIVAL_PHOTOS.length, setCarnivalIdx)}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -208,7 +224,7 @@ const EventGallerySection = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={(e) => nextSlide(e, CARNIVAL_PHOTOS.length, setCarnivalIdx)}
               >
                 <ChevronRight className="w-4 h-4" />
@@ -262,7 +278,7 @@ const EventGallerySection = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={(e) => prevSlide(e, DRISHTIKONE_PHOTOS.length, setDrishtikoneIdx)}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -270,7 +286,7 @@ const EventGallerySection = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={(e) => nextSlide(e, DRISHTIKONE_PHOTOS.length, setDrishtikoneIdx)}
               >
                 <ChevronRight className="w-4 h-4" />
@@ -392,6 +408,7 @@ const EventGallerySection = () => {
               transition={{ duration: 0.25 }}
               className="relative max-w-4xl max-h-[80vh] w-full flex items-center justify-center flex-col gap-4"
               onClick={(e) => e.stopPropagation()}
+              {...swipeHandlers}
             >
               <img
                 src={activePhotos[lightboxIdx].src}

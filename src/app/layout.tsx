@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Unbounded } from "next/font/google";
 import "./globals.css";
 import { config } from "@/data/config";
@@ -52,6 +52,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Extend under the notch / home indicator so env(safe-area-inset-*) resolves
+  // to real values and fixed chrome can pad itself away from them.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

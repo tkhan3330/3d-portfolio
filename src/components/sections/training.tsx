@@ -76,7 +76,7 @@ const TRAINING_EVENTS: TrainingItem[] = [
 
 const TrainingSection = () => {
   return (
-    <SectionWrapper id="training" className="flex flex-col items-center justify-center min-h-screen py-24 bg-secondary/5">
+    <SectionWrapper id="training" className="flex flex-col items-center md:justify-center md:min-h-screen py-14 md:py-24">
       <div className="w-full max-w-4xl px-4 md:px-8 mx-auto">
         <SectionHeader
           id="training"
@@ -85,7 +85,10 @@ const TrainingSection = () => {
           className="mb-12 md:mb-20 mt-0"
         />
 
-        <div className="relative border-l border-border ml-4 md:ml-6 space-y-8">
+        <div className="relative ml-4 md:ml-6 space-y-8">
+          {/* Timeline Connector Line */}
+          <div className="absolute left-0 top-3 bottom-3 w-[2px] bg-gradient-to-b from-primary/60 via-primary/40 to-primary/10 pointer-events-none" />
+
           {TRAINING_EVENTS.map((event, index) => (
             <motion.div
               key={event.id}
@@ -100,7 +103,7 @@ const TrainingSection = () => {
               className="relative pl-8 md:pl-10"
             >
               {/* Timeline dot */}
-              <div className="absolute left-[-13px] top-1.5 w-6 h-6 rounded-full bg-background border-2 border-primary flex items-center justify-center z-10 shadow-sm">
+              <div className="absolute -left-[11px] top-1.5 w-6 h-6 rounded-full bg-background border-2 border-primary flex items-center justify-center z-10 shadow-sm">
                 <div className="w-2.5 h-2.5 rounded-full bg-primary" />
               </div>
 

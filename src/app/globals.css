@@ -6,6 +6,22 @@ body {
   scroll-behavior: smooth;
 }
 
+/* Fixed-header anchor offset: when navigating to a section via the menu
+   (e.g. /#blogs) the target lands below the fixed header instead of hidden
+   underneath it. --header-h approximates the header height (a touch more on
+   small screens where it's relatively taller). */
+:root {
+  --header-h: 5.5rem;
+}
+
+html {
+  scroll-padding-top: var(--header-h);
+}
+
+section[id] {
+  scroll-margin-top: var(--header-h);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -225,6 +241,18 @@ body > canvas {
 @media (hover: none) {
   .portfolio-slider .splide__arrow {
     opacity: 0.9;
+  }
+}
+
+/* Hover-only affordances (the "zoom / view" overlays revealed by group-hover)
+   never trigger on touch. This badge stays hidden where hover exists and
+   appears on touch devices so images read as tappable. */
+.touch-affordance {
+  display: none;
+}
+@media (hover: none) {
+  .touch-affordance {
+    display: flex;
   }
 }
 

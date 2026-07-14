@@ -97,7 +97,7 @@ function ElasticCursor() {
   const pathname = usePathname();
   const isBlogPost = pathname.startsWith("/blogs/") && pathname !== "/blogs";
 
-  const { loadingPercent, isLoading } = usePreloader();
+  const { isLoading } = usePreloader();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const jellyRef = useRef<HTMLDivElement>(null);
@@ -354,14 +354,6 @@ function ElasticCursor() {
     };
   }, [isMobile, isBlogPost]);
 
-  // Preloader uses the blob as a loading bar.
-  useEffect(() => {
-    if (!jellyRef.current) return;
-    jellyRef.current.style.height = "2rem";
-    jellyRef.current.style.borderRadius = "1rem";
-    jellyRef.current.style.width = loadingPercent * 2 + "vw";
-  }, [loadingPercent]);
-
   useTicker(render, isLoading || !cursorMoved || isMobile || isBlogPost);
   if (isMobile || isBlogPost) return null;
 
@@ -380,6 +372,10 @@ function ElasticCursor() {
           boxSizing: "border-box",
           zIndex: 100,
           backdropFilter: "invert(100%)",
+          // Stay hidden until the pointer actually moves (and loading is done),
+          // so the blob never parks as a stray circle in the top-left corner.
+          opacity: cursorMoved && !isLoading ? 1 : 0,
+          transition: "opacity 0.25s ease",
         }}
       ></div>
       <div

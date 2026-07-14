@@ -17,6 +17,11 @@ const links: Link[] = [
     thumbnail: '/assets/nav-link-previews/projects.png'
   },
   {
+    title: 'Classroom',
+    href: '/#classroom',
+    thumbnail: '/assets/nav-link-previews/landing.png'
+  },
+  {
     title: 'Achievements',
     href: '/#achievements',
     thumbnail: '/assets/nav-link-previews/landing.png'
@@ -28,7 +33,7 @@ const links: Link[] = [
   },
   {
     title: 'Blogs',
-    href: '/blogs',
+    href: '/#blogs',
     thumbnail: '/assets/nav-link-previews/blog.png',
   },
   {

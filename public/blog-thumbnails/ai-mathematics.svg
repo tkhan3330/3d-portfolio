@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" fill="none">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1e1b4b"/>
+      <stop offset="0.55" stop-color="#4338ca"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientTransform="translate(620 90) rotate(130) scale(320)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c4b5fd" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#c4b5fd" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid1" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg1)"/>
+  <rect width="800" height="450" fill="url(#grid1)"/>
+  <rect width="800" height="450" fill="url(#glow1)"/>
+
+  <!-- neural network -->
+  <g stroke="#e0e7ff" stroke-opacity="0.35" stroke-width="1.5">
+    <line x1="150" y1="150" x2="330" y2="110"/>
+    <line x1="150" y1="150" x2="330" y2="225"/>
+    <line x1="150" y1="150" x2="330" y2="340"/>
+    <line x1="150" y1="300" x2="330" y2="110"/>
+    <line x1="150" y1="300" x2="330" y2="225"/>
+    <line x1="150" y1="300" x2="330" y2="340"/>
+    <line x1="330" y1="110" x2="510" y2="225"/>
+    <line x1="330" y1="225" x2="510" y2="225"/>
+    <line x1="330" y1="340" x2="510" y2="225"/>
+  </g>
+  <g fill="#a5b4fc">
+    <circle cx="150" cy="150" r="10"/>
+    <circle cx="150" cy="300" r="10"/>
+    <circle cx="330" cy="110" r="10"/>
+    <circle cx="330" cy="225" r="10"/>
+    <circle cx="330" cy="340" r="10"/>
+    <circle cx="510" cy="225" r="14" fill="#ede9fe"/>
+  </g>
+
+  <!-- integral symbol -->
+  <text x="600" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="220" fill="#ede9fe" fill-opacity="0.9" font-style="italic">&#8747;</text>
+
+  <text x="60" y="400" font-family="'Segoe UI', Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="4" fill="#ffffff" fill-opacity="0.85">AI · MATHEMATICS</text>
+</svg>

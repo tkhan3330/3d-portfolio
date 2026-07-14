@@ -3,7 +3,6 @@ import { motion } from "motion/react";
 import styles from "./style.module.scss";
 import { height } from "../anim";
 import Body from "./body/body";
-import Image from "./image/image";
 import MotionToggle from "@/components/motion-toggle";
 
 import { links } from "@/components/header/config";
@@ -44,10 +43,6 @@ const Index: React.FC<IndexProps> = ({ setIsActive }) => {
             setIsActive={setIsActive}
           />
         </div>
-        <Image
-          src={links[selectedLink.index].thumbnail}
-          isActive={selectedLink.isActive}
-        />
       </div>
       {/* Subtle reduced-motion control, tucked into the bottom-right of the menu.
           Stop propagation so toggling motion doesn't also close the menu. */}
@@ -57,7 +52,7 @@ const Index: React.FC<IndexProps> = ({ setIsActive }) => {
         exit={{ opacity: 0 }}
         transition={{ delay: 0.5, duration: 0.4 }}
         onClick={(e) => e.stopPropagation()}
-        className="absolute bottom-0 right-0"
+        className="absolute bottom-0 right-0 pb-[env(safe-area-inset-bottom)] pr-[env(safe-area-inset-right)]"
       >
         <MotionToggle />
       </motion.div>

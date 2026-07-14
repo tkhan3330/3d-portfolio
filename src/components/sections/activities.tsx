@@ -80,7 +80,7 @@ const ClassroomActivities = () => {
   }, []);
 
   return (
-    <SectionWrapper id="activities" className="flex flex-col items-center justify-center min-h-screen py-24">
+    <SectionWrapper id="activities" className="flex flex-col items-center md:justify-center md:min-h-screen py-14 md:py-24">
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
         <SectionHeader
           id="activities"
@@ -118,7 +118,7 @@ const ClassroomActivities = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={() => prevSlide(ALGO_TRADING_IMAGES.length, setAlgoIdx)}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -126,7 +126,7 @@ const ClassroomActivities = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={() => nextSlide(ALGO_TRADING_IMAGES.length, setAlgoIdx)}
               >
                 <ChevronRight className="w-4 h-4" />
@@ -170,7 +170,7 @@ const ClassroomActivities = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={() => prevSlide(PRESENTATION_IMAGES.length, setPresentationIdx)}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -178,7 +178,7 @@ const ClassroomActivities = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={() => nextSlide(PRESENTATION_IMAGES.length, setPresentationIdx)}
               >
                 <ChevronRight className="w-4 h-4" />
@@ -229,7 +229,7 @@ const ClassroomActivities = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={() => prevSlide(GEOGEBRA_IMAGES.length, setGeogebraIdx)}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -237,7 +237,7 @@ const ClassroomActivities = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-8 w-8 z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
                 onClick={() => nextSlide(GEOGEBRA_IMAGES.length, setGeogebraIdx)}
               >
                 <ChevronRight className="w-4 h-4" />

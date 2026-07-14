@@ -93,7 +93,7 @@ const PAPERS_DATA: ResearchPaper[] = [
 
 const ResearchPapersSection = () => {
   return (
-    <SectionWrapper id="research" className="py-24 w-full">
+    <SectionWrapper id="research" className="py-14 md:py-24 w-full">
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
         <SectionHeader
           id="research"

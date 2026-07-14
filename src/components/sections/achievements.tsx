@@ -1,11 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 import SectionWrapper from "../ui/section-wrapper";
 import { SectionHeader } from "./section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Award, Globe, Star, Landmark, GraduationCap, Users, Newspaper, Eye, X, Brain, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { shimmerDataURL } from "@/lib/shimmer";
+import { useLightbox } from "@/hooks/use-lightbox";
+import { Award, Globe, Star, Landmark, GraduationCap, Users, Newspaper, Eye, X, Brain, CheckCircle, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type AchievementItem = {
   id: number;
@@ -27,9 +31,9 @@ const ACHIEVEMENTS: AchievementItem[] = [
     icon: <Award className="w-8 h-8 text-rose-400" />,
     color: "from-rose-500/10 to-rose-500/5",
     images: [
-      "/Certificates/4.1 Drishtikone.jpg",
-      "/Certificates/4.2 Drishtikone 2.jpg",
-      "/Certificates/4.3 Drishtikoke 3.jpg"
+      "/Certificates/Drishtikone/4.1 Drishtikone.jpg",
+      "/Certificates/Drishtikone/4.2 Drishtikone 2.jpg",
+      "/Certificates/Drishtikone/4.3 Drishtikoke 3.jpg"
     ],
   },
   {
@@ -118,7 +122,25 @@ const ACHIEVEMENTS: AchievementItem[] = [
     description: "Recognized for compiling and developing innovative digital mathematical tools and resources for classes.",
     icon: <Award className="w-8 h-8 text-indigo-400" />,
     color: "from-indigo-500/10 to-indigo-500/5",
-    images: ["/Certificates/3. Teacher's Toolkit Award.jpg"],
+    images: ["/Certificates/Drishtikone/3. Teacher's Toolkit Award.jpg"],
+  },
+  {
+    id: 34,
+    title: "Sahcharya Best Young Educator 2025",
+    issuer: "Sahcharya",
+    description: "Recognized as the Best Young Educator for outstanding teaching impact, mentorship, and academic leadership.",
+    icon: <Star className="w-8 h-8 text-rose-400" />,
+    color: "from-rose-500/10 to-rose-500/5",
+    images: ["/Certificates/sahcharya best young educator 2025.jpg"],
+  },
+  {
+    id: 35,
+    title: "Sahcharya Most Innovative Teacher 2026",
+    issuer: "Sahcharya",
+    description: "Honored as the Most Innovative Teacher for pioneering creative, technology-driven classroom methods.",
+    icon: <Award className="w-8 h-8 text-amber-400" />,
+    color: "from-amber-500/10 to-amber-500/5",
+    images: ["/Certificates/sahcharya most inovative teacher 2026.jpg"],
   },
 
   // --- AI & TECH ---
@@ -345,33 +367,54 @@ const AchievementsSection = () => {
   const [selectedImages, setSelectedImages] = useState<string[] | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [zoomed, setZoomed] = useState(false);
 
   const handleOpenLightbox = (images: string[], title: string) => {
     setSelectedImages(images);
     setSelectedTitle(title);
     setCurrentIndex(0);
+    setZoomed(false);
+  };
+
+  const goPrev = () => {
+    if (!selectedImages) return;
+    setZoomed(false);
+    setCurrentIndex((prev) => (prev === 0 ? selectedImages.length - 1 : prev - 1));
+  };
+
+  const goNext = () => {
+    if (!selectedImages) return;
+    setZoomed(false);
+    setCurrentIndex((prev) => (prev === selectedImages.length - 1 ? 0 : prev + 1));
   };
 
   const handlePrevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!selectedImages) return;
-    setCurrentIndex((prev) => (prev === 0 ? selectedImages.length - 1 : prev - 1));
+    goPrev();
   };
 
   const handleNextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!selectedImages) return;
-    setCurrentIndex((prev) => (prev === selectedImages.length - 1 ? 0 : prev + 1));
+    goNext();
   };
 
+  const { swipeHandlers } = useLightbox({
+    active: selectedImages !== null,
+    // Disable swipe-to-navigate while zoomed so panning the certificate doesn't
+    // flip pages.
+    onPrev: !zoomed && selectedImages && selectedImages.length > 1 ? goPrev : undefined,
+    onNext: !zoomed && selectedImages && selectedImages.length > 1 ? goNext : undefined,
+    onClose: () => setSelectedImages(null),
+  });
+
   return (
-    <SectionWrapper id="achievements" className="flex flex-col items-center justify-center min-h-screen py-24">
+    <SectionWrapper id="achievements" className="flex flex-col items-center md:justify-center md:min-h-screen py-14 md:py-24">
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
         <SectionHeader
           id="achievements"
           title="Awards & Honors"
           desc="Complete showcase of academic leadership milestones, teaching credentials, and qualifications."
-          className="mb-12 md:mb-16 mt-0"
+          className="mb-8 md:mb-16 mt-0"
         />
 
         {/* Flat Grid displaying all 33 achievements directly */}
@@ -397,10 +440,21 @@ const AchievementsSection = () => {
                     className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/30 bg-background/50 cursor-zoom-in group"
                     onClick={() => handleOpenLightbox(item.images, item.title)}
                   >
-                    <img
+                    <Image
                       src={item.images[0]}
                       alt={`${item.title} Certificate`}
-                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      placeholder="blur"
+                      blurDataURL={shimmerDataURL()}
+                      // Bypass the image optimizer for these scanned certificates:
+                      // it intermittently fails to produce output for some of the
+                      // source files (leaving blank cards), while the originals
+                      // always render. We keep lazy-loading, the blur-up
+                      // placeholder and zero layout shift; only server-side
+                      // resizing is skipped.
+                      unoptimized
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
                     
                     {item.images.length > 1 && (
@@ -414,6 +468,11 @@ const AchievementsSection = () => {
                         <Eye className="w-3.5 h-3.5" /> Zoom Certificate
                       </span>
                     </div>
+
+                    {/* Touch-only affordance (hover overlays never fire on touch) */}
+                    <span className="touch-affordance absolute bottom-2 left-2 z-10 items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[10px] font-mono text-white border border-white/10">
+                      <Eye className="w-3 h-3" /> Tap to zoom
+                    </span>
                   </div>
                 )}
 
@@ -447,26 +506,40 @@ const AchievementsSection = () => {
             onClick={() => setSelectedImages(null)}
             className="fixed inset-0 z-[100000] flex flex-col items-center justify-center bg-black/95 backdrop-blur-md p-4 cursor-zoom-out"
           >
-            <div className="absolute top-4 right-4 flex items-center gap-4 z-[100001]">
+            <div className="absolute top-4 right-4 flex items-center gap-2 md:gap-3 z-[100001]">
               <span className="text-white font-mono text-sm hidden md:inline-block bg-white/15 px-3.5 py-1.5 rounded-lg border border-white/5">
                 {selectedTitle} {selectedImages.length > 1 && `(${currentIndex + 1} of ${selectedImages.length})`}
               </span>
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-white hover:bg-white/10 rounded-full h-10 w-10 border border-white/5"
+                aria-label={zoomed ? "Zoom out" : "Zoom in to read"}
+                className="text-white hover:bg-white/10 rounded-full h-11 w-11 border border-white/5"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setZoomed((z) => !z);
+                }}
+              >
+                {zoomed ? <ZoomOut className="w-5 h-5" /> : <ZoomIn className="w-5 h-5" />}
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Close"
+                className="text-white hover:bg-white/10 rounded-full h-11 w-11 border border-white/5"
                 onClick={() => setSelectedImages(null)}
               >
                 <X className="w-6 h-6" />
               </Button>
             </div>
 
-            {/* Left Control Arrow */}
-            {selectedImages.length > 1 && (
+            {/* Left Control Arrow (hidden while zoomed to keep panning clean) */}
+            {selectedImages.length > 1 && !zoomed && (
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-4 md:left-8 text-white hover:bg-white/10 rounded-full h-12 w-12 z-[100002] border border-white/5"
+                aria-label="Previous"
+                className="absolute left-3 md:left-8 text-white hover:bg-white/10 rounded-full h-12 w-12 z-[100002] border border-white/5"
                 onClick={handlePrevImage}
               >
                 <ChevronLeft className="w-8 h-8" />
@@ -474,30 +547,44 @@ const AchievementsSection = () => {
             )}
 
             {/* Right Control Arrow */}
-            {selectedImages.length > 1 && (
+            {selectedImages.length > 1 && !zoomed && (
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-4 md:right-8 text-white hover:bg-white/10 rounded-full h-12 w-12 z-[100002] border border-white/5"
+                aria-label="Next"
+                className="absolute right-3 md:right-8 text-white hover:bg-white/10 rounded-full h-12 w-12 z-[100002] border border-white/5"
                 onClick={handleNextImage}
               >
                 <ChevronRight className="w-8 h-8" />
               </Button>
             )}
-            
+
             <motion.div
               key={currentIndex}
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="relative max-w-4xl max-h-[85vh] w-full flex items-center justify-center"
+              className={cn(
+                "relative w-full flex items-center justify-center",
+                zoomed ? "max-w-[95vw] max-h-[88vh] overflow-auto" : "max-w-4xl max-h-[85vh]"
+              )}
               onClick={(e) => e.stopPropagation()}
+              {...(zoomed ? {} : swipeHandlers)}
             >
               <img
                 src={selectedImages[currentIndex]}
                 alt={`${selectedTitle} Certificate - Page ${currentIndex + 1}`}
-                className="max-w-full max-h-[80vh] object-contain rounded-lg border border-white/10 shadow-2xl"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setZoomed((z) => !z);
+                }}
+                className={cn(
+                  "rounded-lg border border-white/10 shadow-2xl transition-transform duration-200",
+                  zoomed
+                    ? "max-w-none w-auto h-auto min-w-full cursor-zoom-out"
+                    : "max-w-full max-h-[80vh] object-contain cursor-zoom-in"
+                )}
               />
             </motion.div>
           </motion.div>

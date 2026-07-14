@@ -4,7 +4,10 @@
   position: fixed;
   width: 100%;
   box-sizing: border-box;
-  padding: 15px;
+  // Base 15px padding, expanded to clear the notch / rounded corners on
+  // devices that report safe-area insets (viewport-fit=cover).
+  padding: max(15px, env(safe-area-inset-top)) max(15px, env(safe-area-inset-right)) 15px
+    max(15px, env(safe-area-inset-left));
   backdrop-filter: blur(12px);
 
   .background {

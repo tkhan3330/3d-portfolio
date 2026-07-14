@@ -24,7 +24,7 @@ const SkillsSection = () => {
     return (
       <SectionWrapper
         id="skills"
-        className="flex w-full min-h-screen flex-col justify-center py-24"
+        className="flex w-full md:min-h-screen flex-col md:justify-center py-14 md:py-24"
       >
         <SectionHeader
           id="skills"
@@ -79,7 +79,7 @@ const SkillsSection = () => {
       id="skills"
       className="w-full h-screen md:h-[150dvh] pointer-events-none"
     >
-      <SectionHeader id="skills" title="Tech Stack" desc="(hint: press a key)" />
+      <SectionHeader id="skills" title="Tech Stack" desc="(hint: press a key)" sticky />
     </SectionWrapper>
   );
 };

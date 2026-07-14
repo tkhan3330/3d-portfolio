@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" fill="none">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4a0f2e"/>
+      <stop offset="0.55" stop-color="#be185d"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+    <radialGradient id="glow5" cx="0" cy="0" r="1" gradientTransform="translate(600 110) rotate(135) scale(330)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fecdd3" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fecdd3" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid5" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg5)"/>
+  <rect width="800" height="450" fill="url(#grid5)"/>
+  <rect width="800" height="450" fill="url(#glow5)"/>
+
+  <!-- open book -->
+  <g stroke="#fff1f2" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M150 300 C 230 260 320 260 400 300 C 480 260 570 260 650 300"/>
+    <path d="M150 300 L 150 180 C 230 140 320 140 400 180 C 480 140 570 140 650 180 L 650 300"/>
+    <line x1="400" y1="180" x2="400" y2="300"/>
+  </g>
+  <g stroke="#fecdd3" stroke-opacity="0.7" stroke-width="3" stroke-linecap="round">
+    <line x1="200" y1="210" x2="350" y2="192"/>
+    <line x1="200" y1="235" x2="350" y2="217"/>
+    <line x1="450" y1="192" x2="600" y2="210"/>
+    <line x1="450" y1="217" x2="600" y2="235"/>
+  </g>
+
+  <!-- growth spark -->
+  <g fill="#fff1f2">
+    <circle cx="400" cy="120" r="9"/>
+    <path d="M400 90 l6 18 18 6 -18 6 -6 18 -6 -18 -18 -6 18 -6 z" fill-opacity="0.9"/>
+  </g>
+
+  <text x="60" y="410" font-family="'Segoe UI', Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="3" fill="#ffffff" fill-opacity="0.9">NEP 2020 · LEARNING</text>
+</svg>
