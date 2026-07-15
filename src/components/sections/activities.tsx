@@ -78,7 +78,6 @@ const ClassroomActivities = () => {
       clearInterval(geogebraTimer);
     };
   }, []);
-
   return (
     <SectionWrapper id="activities" className="flex flex-col items-center md:justify-center md:min-h-screen py-14 md:py-24">
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
@@ -86,12 +85,12 @@ const ClassroomActivities = () => {
           id="activities"
           title="Classroom Activities"
           desc="Everything boasted in this portfolio is actively brought to life in the classroom."
+          sticky
           className="mb-12 md:mb-16 mt-0"
         />
 
         {/* TOP ROW: Hands-on Projects & Cross-Dept Work */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">          
           {/* CARD 1: Cross Dept Algo Trading */}
           <Card className="flex flex-col border-border bg-card/50 backdrop-blur-sm overflow-hidden group shadow-sm hover:shadow-md transition-all duration-300">
             <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/30 bg-background/50">

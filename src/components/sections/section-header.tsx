@@ -7,33 +7,28 @@ export const SectionHeader = ({
   id, 
   title, 
   desc, 
-  className,
-  sticky = false
+  className
 }: { 
   id: string, 
   title: string | ReactNode, 
   desc?: string, 
   className?: string,
-  sticky?: boolean 
+  sticky?: boolean
 }) => {
   return (
-
-    <div className={cn(sticky ? "top-[70px] sticky mb-96" : "relative mb-8 md:mb-16", className)}>
+    <div className={cn("relative mb-8 md:mb-16 w-full flex flex-col items-center", className)}>
       <Link href={`#${id}`}>
         <BoxReveal width="100%">
-          <h2
-            className={cn(
-              "text-3xl text-center sm:text-4xl md:text-7xl font-bold tracking-tight",
-              "text-foreground"
-            )}
-          >
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-foreground text-center">
             {title}
           </h2>
         </BoxReveal>
       </Link>
-      <p className="mx-auto mt-3 line-clamp-4 max-w-3xl font-normal text-sm md:text-base text-center text-muted-foreground">
-        {desc}
-      </p>
+      {desc && (
+        <p className="mx-auto mt-4 max-w-3xl text-sm md:text-base text-center text-muted-foreground leading-relaxed">
+          {desc}
+        </p>
+      )}
     </div>
   )
 }

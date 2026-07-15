@@ -18,12 +18,16 @@ import { SectionHeader } from "./section-header";
 
 import SectionWrapper from "../ui/section-wrapper";
 import ScrollingPreview from "../scrolling-preview";
-
 const ProjectsSection = () => {
   return (
-    <SectionWrapper id="projects" className="max-w-7xl mx-auto md:min-h-[130vh] px-4">
-      <SectionHeader id="projects" title="Projects" />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <SectionWrapper id="projects" className="max-w-7xl mx-auto md:min-h-[130vh] px-4 flex flex-col items-center">
+      <SectionHeader
+        id="projects"
+        title="Projects"
+        desc="Custom web tools, AI planners, and workflow automation portals built to empower high school teachers and streamline department administration."
+        sticky
+      />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
@@ -31,7 +35,6 @@ const ProjectsSection = () => {
     </SectionWrapper>
   );
 };
-
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <div className="flex items-center justify-center">

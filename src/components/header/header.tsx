@@ -13,13 +13,46 @@ import { config } from "@/data/config";
 import OnlineUsers from "../realtime/online-users";
 import { GitHubStarsButton } from "../ui/shadcn-io/github-stars-button";
 
+import { useActiveSection } from "@/hooks/use-active-section";
+
 interface HeaderProps {
   loader?: boolean;
 }
 
+const SECTION_LABELS: Record<string, string> = {
+  experience: "Experience",
+  projects: "Projects",
+  activities: "Classroom Activities",
+  classroom: "In the Classroom",
+  achievements: "Awards & Honors",
+  gallery: "Event Highlights",
+  research: "Research Work",
+  explainers: "Video Explainers",
+  training: "Teacher Training",
+  blogs: "Publications",
+  contact: "Get in Touch",
+};
+
+const SECTION_IDS = [
+  "hero",
+  "experience",
+  "projects",
+  "activities",
+  "classroom",
+  "achievements",
+  "gallery",
+  "research",
+  "explainers",
+  "training",
+  "blogs",
+  "contact",
+];
+
 const Header = ({ loader }: HeaderProps) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const isHome = usePathname() === "/";
+  const activeSection = useActiveSection(isHome ? SECTION_IDS : []);
+
   return (
     <motion.header
       className={cn(
@@ -51,8 +84,23 @@ const Header = ({ loader }: HeaderProps) => {
       </div> */}
       <div className={cn(styles.bar, "flex items-center justify-between")}>
         <Link href="/" className="flex items-center justify-center">
-          <Button variant={"link"} className="text-md">
-            {config.author}
+          <Button variant={"link"} className="text-md font-bold tracking-tight hover:no-underline flex items-center gap-2 pr-0 pl-1">
+            <span>{config.author}</span>
+            <AnimatePresence mode="wait">
+              {isHome && activeSection && SECTION_LABELS[activeSection] && (
+                <motion.span
+                  key={activeSection}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 8 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  className="text-muted-foreground font-normal text-xs md:text-sm flex items-center gap-2 select-none"
+                >
+                  <span className="text-muted-foreground/30 font-light">/</span>
+                  <span className="font-medium bg-gradient-to-r from-muted-foreground to-foreground bg-clip-text text-transparent">{SECTION_LABELS[activeSection]}</span>
+                </motion.span>
+              )}
+            </AnimatePresence>
           </Button>
         </Link>
 

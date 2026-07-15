@@ -496,16 +496,17 @@ const AchievementsSection = () => {
 
   return (
     <SectionWrapper id="achievements" className="flex flex-col items-center md:justify-center md:min-h-screen py-14 md:py-24">
-      <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
+      <div className="w-full max-w-5xl px-4 md:px-8 mx-auto flex flex-col items-center">
         <SectionHeader
           id="achievements"
           title="Awards & Honors"
           desc="Complete showcase of academic leadership milestones, teaching credentials, and qualifications."
-          className="mb-8 md:mb-16 mt-0"
+          sticky
+          className="mt-0"
         />
 
         {/* Flat Grid displaying all achievements directly */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {ACHIEVEMENTS.map((item, index) => (
             <motion.div
               key={item.id}
@@ -549,7 +550,6 @@ const AchievementsSection = () => {
           ))}
         </div>
       </div>
-
       {/* Interactive Lightbox Overlay with Carousel */}
       <AnimatePresence>
         {selectedAchievementIdx !== null && (

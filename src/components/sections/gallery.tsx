@@ -114,7 +114,6 @@ const EventGallerySection = () => {
     e.stopPropagation();
     setter((prev) => (prev === 0 ? len - 1 : prev - 1));
   };
-
   return (
     <SectionWrapper id="gallery" className="py-14 md:py-24 bg-secondary/5 w-full">
       <div className="w-full max-w-5xl px-4 md:px-8 mx-auto">
@@ -122,12 +121,12 @@ const EventGallerySection = () => {
           id="gallery"
           title="Event Highlights"
           desc="Live snapshots from workshops, AI competitions, and award presentations shown directly in front."
+          sticky
           className="mb-12 md:mb-16 mt-0"
         />
 
         {/* TOP ROW: Two 1/2 width cards (Workshop & Carnival) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-
           {/* CARD 1: CBSE CT & AI Workshop */}
           <Card 
             className="flex flex-col border-border bg-card/90 dark:bg-card/40 backdrop-blur-sm overflow-hidden group shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in"
