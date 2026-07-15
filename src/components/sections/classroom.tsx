@@ -15,10 +15,10 @@ type ClassroomPhoto = {
 };
 
 const CLASSROOM_PHOTOS: ClassroomPhoto[] = [
-  { src: "/Classroom/1.jpg", caption: "Explaining core mathematical concepts to students during a live class session" },
-  { src: "/Classroom/2.jpg", caption: "Engaging students with interactive problem-solving at the board" },
-  { src: "/Classroom/3.jpg", caption: "Guiding a hands-on learning activity in the classroom" },
-  { src: "/Classroom/4.jpg", caption: "Facilitating discussion and doubt-solving with the class" },
+  { src: "/ClassRoom/1.jpg", caption: "Explaining core mathematical concepts to students during a live class session" },
+  { src: "/ClassRoom/2.jpg", caption: "Engaging students with interactive problem-solving at the board" },
+  { src: "/ClassRoom/3.jpg", caption: "Guiding a hands-on learning activity in the classroom" },
+  { src: "/ClassRoom/4.jpg", caption: "Facilitating discussion and doubt-solving with the class" },
 ];
 
 const ClassroomSection = () => {
