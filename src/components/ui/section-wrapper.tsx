@@ -28,12 +28,18 @@ const SectionWrapper = ({ id, className, children, ...props }: SectionWrapperPro
       className={cn("relative", className)}
       {...props}
     >
-      <motion.div
-        style={isMobile ? undefined : { opacity, scale }}
-        className="w-full"
-      >
-        {children}
-      </motion.div>
+      {isMobile ? (
+        <div className="w-full">
+          {children}
+        </div>
+      ) : (
+        <motion.div
+          style={{ opacity, scale }}
+          className="w-full"
+        >
+          {children}
+        </motion.div>
+      )}
     </section>
   );
 };
