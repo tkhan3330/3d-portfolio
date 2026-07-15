@@ -46,7 +46,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             <ScrollingPreview
               src={project.src}
               alt={project.title}
-              bg={`/assets/backgrounds/${project.id}.jpg`}
+              bg={project.bg}
             />
             <div className="absolute w-full h-24 bottom-0 left-0 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-10">
               <div className="flex flex-col h-full items-start justify-end p-4">

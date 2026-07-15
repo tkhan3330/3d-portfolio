@@ -34,6 +34,17 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
 
   const [keyboardRevealed, setKeyboardRevealed] = useState(false);
 
+  const safeSetVariable = (name: string, value: string) => {
+    if (!splineApp) return;
+    try {
+      if (splineApp.getVariable(name) !== undefined) {
+        splineApp.setVariable(name, value);
+      }
+    } catch (e) {
+      // Ignore
+    }
+  };
+
   // --- Event Handlers ---
 
   const handleMouseHover = (e: SplineEvent) => {
@@ -43,10 +54,8 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
       if (selectedSkillRef.current) playReleaseSound();
       setSelectedSkill(null);
       selectedSkillRef.current = null;
-      if (splineApp.getVariable("heading") && splineApp.getVariable("desc")) {
-        splineApp.setVariable("heading", "");
-        splineApp.setVariable("desc", "");
-      }
+      safeSetVariable("heading", "");
+      safeSetVariable("desc", "");
     } else {
       if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
         const skill = SKILLS[e.target.name as SkillNames];
@@ -76,8 +85,8 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
     splineApp.addEventListener("keyUp", () => {
       if (!splineApp || isInputFocused()) return;
       playReleaseSound();
-      splineApp.setVariable("heading", "");
-      splineApp.setVariable("desc", "");
+      safeSetVariable("heading", "");
+      safeSetVariable("desc", "");
     });
     splineApp.addEventListener("keyDown", (e) => {
       if (!splineApp || isInputFocused()) return;
@@ -86,8 +95,8 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
         playPressSound();
         setSelectedSkill(skill);
         selectedSkillRef.current = skill;
-        splineApp.setVariable("heading", skill.label);
-        splineApp.setVariable("desc", skill.shortDescription);
+        safeSetVariable("heading", skill.label);
+        safeSetVariable("desc", skill.shortDescription);
       }
     });
     splineApp.addEventListener("mouseHover", handleMouseHover);
@@ -342,8 +351,8 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
 
   useEffect(() => {
     if (!selectedSkill || !splineApp) return;
-    splineApp.setVariable("heading", selectedSkill.label);
-    splineApp.setVariable("desc", selectedSkill.shortDescription);
+    safeSetVariable("heading", selectedSkill.label);
+    safeSetVariable("desc", selectedSkill.shortDescription);
   }, [selectedSkill]);
 
   // Handle rotation and teardown animations based on active section
@@ -392,8 +401,8 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
     const manageAnimations = async () => {
       // Reset text if not in skills
       if (activeSection !== "skills") {
-        splineApp.setVariable("heading", "");
-        splineApp.setVariable("desc", "");
+        safeSetVariable("heading", "");
+        safeSetVariable("desc", "");
       }
 
       // Handle Rotate/Teardown Tweens

@@ -94,6 +94,11 @@ function measure(el: HTMLElement): Base {
 }
 
 function ElasticCursor() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const pathname = usePathname();
   const isBlogPost = pathname.startsWith("/blogs/") && pathname !== "/blogs";
 
@@ -153,7 +158,7 @@ function ElasticCursor() {
     set.dotX = gsap.quickSetter(dotEl, "x", "px");
     set.dotY = gsap.quickSetter(dotEl, "y", "px");
     set.dotOpacity = gsap.quickSetter(dotEl, "opacity");
-  }, [isMobile, isBlogPost]);
+  }, [isMobile, isBlogPost, mounted]);
 
   // Single render loop. Reads everything from refs so it stays stable and the
   // ticker isn't re-added on every hover.
@@ -355,7 +360,7 @@ function ElasticCursor() {
   }, [isMobile, isBlogPost]);
 
   useTicker(render, isLoading || !cursorMoved || isMobile || isBlogPost);
-  if (isMobile || isBlogPost) return null;
+  if (!mounted || isMobile || isBlogPost) return null;
 
   return (
     <>
@@ -375,7 +380,8 @@ function ElasticCursor() {
           // Stay hidden until the pointer actually moves (and loading is done),
           // so the blob never parks as a stray circle in the top-left corner.
           opacity: cursorMoved && !isLoading ? 1 : 0,
-          transition: "opacity 0.25s ease",
+          visibility: cursorMoved && !isLoading ? "visible" : "hidden",
+          transition: "opacity 0.25s ease, visibility 0.25s ease",
         }}
       ></div>
       <div
@@ -385,6 +391,8 @@ function ElasticCursor() {
           opacity: 0,
           backdropFilter: "invert(100%)",
           zIndex: 101,
+          visibility: cursorMoved && !isLoading ? "visible" : "hidden",
+          transition: "opacity 0.25s ease, visibility 0.25s ease",
         }}
       ></div>
     </>

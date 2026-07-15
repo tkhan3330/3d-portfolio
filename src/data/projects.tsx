@@ -116,6 +116,7 @@ export type Project = {
   category: string;
   title: string;
   src: string;
+  bg?: string;
   screenshots: string[];
   skills: { frontend: Skill[]; backend: Skill[] };
   content: React.ReactNode | any;
