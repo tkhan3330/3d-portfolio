@@ -50,15 +50,15 @@ const EventGallerySection = () => {
   useEffect(() => {
     const cbseTimer = setInterval(() => {
       setCbseIdx((prev) => (prev + 1) % CBSE_PHOTOS.length);
-    }, 4500);
+    }, 2500);
 
     const carnivalTimer = setInterval(() => {
       setCarnivalIdx((prev) => (prev + 1) % CARNIVAL_PHOTOS.length);
-    }, 5000);
+    }, 3000);
 
     const drishtikoneTimer = setInterval(() => {
       setDrishtikoneIdx((prev) => (prev + 1) % DRISHTIKONE_PHOTOS.length);
-    }, 5500);
+    }, 3500);
 
     return () => {
       clearInterval(cbseTimer);

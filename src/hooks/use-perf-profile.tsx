@@ -151,13 +151,11 @@ export function usePerfProfile(): PerfProfile {
     // Data Saver. Viewport size (a real media query) just scales quality down;
     // it never removes the scene. No capability heuristics — see detectSaveData.
     const lowEnd = saveData;
-    // Phones also skip the WebGL scene: it's non-interactive on touch (no hover /
-    // key presses), and the runtime + scene are a heavy load/battery cost. A
-    // lightweight static backdrop stands in instead.
-    const disable3D = reducedMotion || saveData || isMobile;
+    // Enable 3D WebGL scene on mobile as requested by the user, scale down particle count and maxDpr.
+    const disable3D = reducedMotion || saveData;
     const disableDecorative = reducedMotion;
     const particleCount = disableDecorative ? 0 : isMobile ? 30 : 100;
-    const maxDpr = isMobile ? 1.5 : 2;
+    const maxDpr = isMobile ? 1.2 : 2;
     return {
       reducedMotion,
       rawReducedMotion,

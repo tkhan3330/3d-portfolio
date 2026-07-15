@@ -130,6 +130,7 @@ const projects: Project[] = [
     category: "AI-EdTech Tool",
     title: "Lesson Planner",
     src: `${BASE_PATH}/lesson_plan_maker.png`,
+    bg: "/assets/backgrounds/storekit.jpg",
     screenshots: ["lesson_plan_maker.png"],
     skills: {
       frontend: [
@@ -177,6 +178,7 @@ const projects: Project[] = [
     category: "School Administration Portal",
     title: "Lesson Plan Vault",
     src: `${BASE_PATH}/lesson_plan_manager.png`,
+    bg: "/assets/backgrounds/codingducks.jpg",
     screenshots: ["lesson_plan_manager.png"],
     skills: {
       frontend: [
@@ -222,6 +224,7 @@ const projects: Project[] = [
     category: "School Workflow Automation",
     title: "Edusign",
     src: `${BASE_PATH}/lesson_plan_signer.png`,
+    bg: "/assets/backgrounds/gumbalup.jpg",
     screenshots: ["lesson_plan_signer.png"],
     skills: {
       frontend: [
@@ -263,6 +266,7 @@ const projects: Project[] = [
     category: "School Document Automation",
     title: "DocuMora",
     src: `${BASE_PATH}/documora.png`,
+    bg: "/assets/backgrounds/waku.jpg",
     screenshots: ["documora.png"],
     skills: {
       frontend: [
@@ -306,6 +310,7 @@ const projects: Project[] = [
     category: "AI Pedagogical Feedback",
     title: "AI Self Observation",
     src: `${BASE_PATH}/ai_self_observation.png`,
+    bg: "/assets/backgrounds/peakposts.jpg",
     screenshots: ["ai_self_observation.png"],
     skills: {
       frontend: [
@@ -348,6 +353,7 @@ const projects: Project[] = [
     category: "Computational Mathematics",
     title: "Code to Class",
     src: `${BASE_PATH}/code_to_class.png`,
+    bg: "/assets/backgrounds/kanbi.jpg",
     screenshots: ["code_to_class.png"],
     skills: {
       frontend: [
@@ -390,6 +396,7 @@ const projects: Project[] = [
     category: "E-Learning & Android App",
     title: "MathsWithTauseefSir",
     src: `${BASE_PATH}/mwts.png`,
+    bg: "/assets/backgrounds/portfolio.jpg",
     screenshots: ["mwts.png"],
     skills: {
       frontend: [
@@ -431,6 +438,7 @@ const projects: Project[] = [
     category: "Academic Productivity",
     title: "Remindly",
     src: `${BASE_PATH}/remindly.png`,
+    bg: "/assets/backgrounds/codingducks.jpg",
     screenshots: ["remindly.png"],
     skills: {
       frontend: [
@@ -471,6 +479,7 @@ const projects: Project[] = [
     category: "Event Administration",
     title: "Scoreboard Live",
     src: `${BASE_PATH}/live_score.png`,
+    bg: "/assets/backgrounds/storekit.jpg",
     screenshots: ["live_score.png"],
     skills: {
       frontend: [

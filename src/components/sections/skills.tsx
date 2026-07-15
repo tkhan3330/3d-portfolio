@@ -17,8 +17,8 @@ import { cn } from "@/lib/utils";
  * grid instead. Progressive enhancement: the content survives without WebGL.
  */
 const SkillsSection = () => {
-  const { disable3D, ready } = usePerfProfile();
-  const showGrid = ready && disable3D;
+  const { disable3D, ready, isMobile } = usePerfProfile();
+  const showGrid = ready && (disable3D || isMobile);
 
   if (showGrid) {
     return (

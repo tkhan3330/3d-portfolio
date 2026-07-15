@@ -62,15 +62,15 @@ const ClassroomActivities = () => {
   useEffect(() => {
     const algoTimer = setInterval(() => {
       setAlgoIdx((prev) => (prev + 1) % ALGO_TRADING_IMAGES.length);
-    }, 4500);
+    }, 2500);
 
     const presentationTimer = setInterval(() => {
       setPresentationIdx((prev) => (prev + 1) % PRESENTATION_IMAGES.length);
-    }, 5000);
+    }, 3000);
 
     const geogebraTimer = setInterval(() => {
       setGeogebraIdx((prev) => (prev + 1) % GEOGEBRA_IMAGES.length);
-    }, 5500);
+    }, 3500);
 
     return () => {
       clearInterval(algoTimer);
