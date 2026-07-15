@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import SectionWrapper from "../ui/section-wrapper";
@@ -362,30 +362,117 @@ const ACHIEVEMENTS: AchievementItem[] = [
     images: ["/Certificates/MdoNer.png"],
   },
 ];
+const CertificatePreview = ({
+  images,
+  title,
+  onClick,
+}: {
+  images: string[];
+  title: string;
+  onClick: () => void;
+}) => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    // Cycle images automatically with a staggered, randomized interval to avoid synchronicity
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % images.length);
+    }, 3000 + Math.random() * 1200);
+
+    return () => clearInterval(interval);
+  }, [images]);
+
+  return (
+    <div
+      className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/30 bg-background/50 cursor-zoom-in group"
+      onClick={onClick}
+    >
+      {images.length > 1 ? (
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIdx}
+            src={images[currentIdx]}
+            alt={`${title} Certificate - Page ${currentIdx + 1}`}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="absolute inset-0 h-full w-full object-cover object-top"
+          />
+        </AnimatePresence>
+      ) : (
+        <Image
+          src={images[0]}
+          alt={`${title} Certificate`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          placeholder="blur"
+          blurDataURL={shimmerDataURL()}
+          unoptimized
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+        />
+      )}
+
+      {images.length > 1 && (
+        <div className="absolute top-2 right-2 bg-black/75 px-2.5 py-1 rounded-md text-[10px] font-mono text-white font-semibold border border-white/10 z-10">
+          {images.length} Pages
+        </div>
+      )}
+
+      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
+        <span className="text-white text-xs font-mono bg-black/60 px-3 py-1.5 rounded-full flex gap-1.5 items-center">
+          <Eye className="w-3.5 h-3.5" /> Zoom Certificate
+        </span>
+      </div>
+
+      {/* Touch-only affordance */}
+      <span className="touch-affordance absolute bottom-2 left-2 z-10 items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[10px] font-mono text-white border border-white/10">
+        <Eye className="w-3 h-3" /> Tap to zoom
+      </span>
+    </div>
+  );
+};
 
 const AchievementsSection = () => {
-  const [selectedImages, setSelectedImages] = useState<string[] | null>(null);
-  const [selectedTitle, setSelectedTitle] = useState<string>("");
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [selectedAchievementIdx, setSelectedAchievementIdx] = useState<number | null>(null);
+  const [currentPageIdx, setCurrentPageIdx] = useState<number>(0);
   const [zoomed, setZoomed] = useState(false);
 
-  const handleOpenLightbox = (images: string[], title: string) => {
-    setSelectedImages(images);
-    setSelectedTitle(title);
-    setCurrentIndex(0);
+  const handleOpenLightbox = (index: number) => {
+    setSelectedAchievementIdx(index);
+    setCurrentPageIdx(0);
     setZoomed(false);
   };
 
   const goPrev = () => {
-    if (!selectedImages) return;
+    if (selectedAchievementIdx === null) return;
     setZoomed(false);
-    setCurrentIndex((prev) => (prev === 0 ? selectedImages.length - 1 : prev - 1));
+
+    if (currentPageIdx > 0) {
+      setCurrentPageIdx(currentPageIdx - 1);
+    } else {
+      // Go to previous achievement card
+      const prevIdx = selectedAchievementIdx === 0 ? ACHIEVEMENTS.length - 1 : selectedAchievementIdx - 1;
+      setSelectedAchievementIdx(prevIdx);
+      setCurrentPageIdx(ACHIEVEMENTS[prevIdx].images.length - 1);
+    }
   };
 
   const goNext = () => {
-    if (!selectedImages) return;
+    if (selectedAchievementIdx === null) return;
     setZoomed(false);
-    setCurrentIndex((prev) => (prev === selectedImages.length - 1 ? 0 : prev + 1));
+
+    const currentImages = ACHIEVEMENTS[selectedAchievementIdx].images;
+    if (currentPageIdx < currentImages.length - 1) {
+      setCurrentPageIdx(currentPageIdx + 1);
+    } else {
+      // Go to next achievement card
+      const nextIdx = (selectedAchievementIdx + 1) % ACHIEVEMENTS.length;
+      setSelectedAchievementIdx(nextIdx);
+      setCurrentPageIdx(0);
+    }
   };
 
   const handlePrevImage = (e: React.MouseEvent) => {
@@ -399,12 +486,12 @@ const AchievementsSection = () => {
   };
 
   const { swipeHandlers } = useLightbox({
-    active: selectedImages !== null,
+    active: selectedAchievementIdx !== null,
     // Disable swipe-to-navigate while zoomed so panning the certificate doesn't
     // flip pages.
-    onPrev: !zoomed && selectedImages && selectedImages.length > 1 ? goPrev : undefined,
-    onNext: !zoomed && selectedImages && selectedImages.length > 1 ? goNext : undefined,
-    onClose: () => setSelectedImages(null),
+    onPrev: !zoomed ? goPrev : undefined,
+    onNext: !zoomed ? goNext : undefined,
+    onClose: () => setSelectedAchievementIdx(null),
   });
 
   return (
@@ -417,7 +504,7 @@ const AchievementsSection = () => {
           className="mb-8 md:mb-16 mt-0"
         />
 
-        {/* Flat Grid displaying all 33 achievements directly */}
+        {/* Flat Grid displaying all achievements directly */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {ACHIEVEMENTS.map((item, index) => (
             <motion.div
@@ -426,7 +513,7 @@ const AchievementsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.5,
-                delay: Math.min(index * 0.05, 0.8), // Cap maximum initial delay for rendering smoothness
+                delay: Math.min(index * 0.05, 0.8),
                 ease: "easeOut",
               }}
               viewport={{ once: true, margin: "-50px" }}
@@ -436,44 +523,11 @@ const AchievementsSection = () => {
                 
                 {/* Front-Facing Certificate Preview */}
                 {item.images.length > 0 && (
-                  <div
-                    className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/30 bg-background/50 cursor-zoom-in group"
-                    onClick={() => handleOpenLightbox(item.images, item.title)}
-                  >
-                    <Image
-                      src={item.images[0]}
-                      alt={`${item.title} Certificate`}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      placeholder="blur"
-                      blurDataURL={shimmerDataURL()}
-                      // Bypass the image optimizer for these scanned certificates:
-                      // it intermittently fails to produce output for some of the
-                      // source files (leaving blank cards), while the originals
-                      // always render. We keep lazy-loading, the blur-up
-                      // placeholder and zero layout shift; only server-side
-                      // resizing is skipped.
-                      unoptimized
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    />
-                    
-                    {item.images.length > 1 && (
-                      <div className="absolute top-2 right-2 bg-black/75 px-2.5 py-1 rounded-md text-[10px] font-mono text-white font-semibold border border-white/10">
-                        {item.images.length} Pages
-                      </div>
-                    )}
-                    
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="text-white text-xs font-mono bg-black/60 px-3 py-1.5 rounded-full flex gap-1.5 items-center">
-                        <Eye className="w-3.5 h-3.5" /> Zoom Certificate
-                      </span>
-                    </div>
-
-                    {/* Touch-only affordance (hover overlays never fire on touch) */}
-                    <span className="touch-affordance absolute bottom-2 left-2 z-10 items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-[10px] font-mono text-white border border-white/10">
-                      <Eye className="w-3 h-3" /> Tap to zoom
-                    </span>
-                  </div>
+                  <CertificatePreview
+                    images={item.images}
+                    title={item.title}
+                    onClick={() => handleOpenLightbox(index)}
+                  />
                 )}
 
                 <CardHeader className="flex flex-row items-center gap-4 pb-2 pt-4">
@@ -498,17 +552,17 @@ const AchievementsSection = () => {
 
       {/* Interactive Lightbox Overlay with Carousel */}
       <AnimatePresence>
-        {selectedImages && selectedImages.length > 0 && (
+        {selectedAchievementIdx !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedImages(null)}
+            onClick={() => setSelectedAchievementIdx(null)}
             className="fixed inset-0 z-[100000] flex flex-col items-center justify-center bg-black/95 backdrop-blur-md p-4 cursor-zoom-out"
           >
             <div className="absolute top-4 right-4 flex items-center gap-2 md:gap-3 z-[100001]">
-              <span className="text-white font-mono text-sm hidden md:inline-block bg-white/15 px-3.5 py-1.5 rounded-lg border border-white/5">
-                {selectedTitle} {selectedImages.length > 1 && `(${currentIndex + 1} of ${selectedImages.length})`}
+              <span className="text-white font-mono text-xs md:text-sm hidden sm:inline-block bg-white/15 px-3.5 py-1.5 rounded-lg border border-white/5 max-w-xs md:max-w-md truncate">
+                {ACHIEVEMENTS[selectedAchievementIdx].title} {ACHIEVEMENTS[selectedAchievementIdx].images.length > 1 && `(${currentPageIdx + 1} of ${ACHIEVEMENTS[selectedAchievementIdx].images.length})`}
               </span>
               <Button
                 variant="ghost"
@@ -527,14 +581,14 @@ const AchievementsSection = () => {
                 size="icon"
                 aria-label="Close"
                 className="text-white hover:bg-white/10 rounded-full h-11 w-11 border border-white/5"
-                onClick={() => setSelectedImages(null)}
+                onClick={() => setSelectedAchievementIdx(null)}
               >
                 <X className="w-6 h-6" />
               </Button>
             </div>
 
             {/* Left Control Arrow (hidden while zoomed to keep panning clean) */}
-            {selectedImages.length > 1 && !zoomed && (
+            {!zoomed && (
               <Button
                 variant="ghost"
                 size="icon"
@@ -547,7 +601,7 @@ const AchievementsSection = () => {
             )}
 
             {/* Right Control Arrow */}
-            {selectedImages.length > 1 && !zoomed && (
+            {!zoomed && (
               <Button
                 variant="ghost"
                 size="icon"
@@ -560,7 +614,7 @@ const AchievementsSection = () => {
             )}
 
             <motion.div
-              key={currentIndex}
+              key={`${selectedAchievementIdx}-${currentPageIdx}`}
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -573,8 +627,8 @@ const AchievementsSection = () => {
               {...(zoomed ? {} : swipeHandlers)}
             >
               <img
-                src={selectedImages[currentIndex]}
-                alt={`${selectedTitle} Certificate - Page ${currentIndex + 1}`}
+                src={ACHIEVEMENTS[selectedAchievementIdx].images[currentPageIdx]}
+                alt={`${ACHIEVEMENTS[selectedAchievementIdx].title} Certificate - Page ${currentPageIdx + 1}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   setZoomed((z) => !z);
