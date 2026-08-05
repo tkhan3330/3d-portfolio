@@ -5,9 +5,28 @@ import SectionWrapper from "../ui/section-wrapper";
 import { SectionHeader } from "./section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Play, Video, Presentation, Cpu, Image, Building2, HeartPulse, ChevronRight, ChevronLeft, Layers, Sparkles } from "lucide-react";
+import { Play, Video, Presentation, Cpu, Image, Building2, HeartPulse, ChevronRight, ChevronLeft, Layers, Sparkles, ShieldCheck } from "lucide-react";
 
-// --- Data definitions matching your actual files in public/Activities ---
+// --- Data definitions matching your actual files in public/Activities & public/Firesafety audit ---
+const FIRE_SAFETY_AUDIT_IMAGES = [
+  {
+    src: "/Firesafety audit/a1.webp",
+    caption: "Campus Fire Safety Audit: Student group inspecting campus safety zones & fire extinguishers"
+  },
+  {
+    src: "/Firesafety audit/a2.webp",
+    caption: "Evacuation Geometry & Board Analysis: Calculating evacuation flow rates, stairwell volume, and angles"
+  },
+  {
+    src: "/Firesafety audit/a3.webp",
+    caption: "On-Site Field Audit: Physical measurements and spatial coordinate mapping across campus points"
+  },
+  {
+    src: "/Firesafety audit/a4.webp",
+    caption: "Data Synthesis & Group Learning: Collaborative student group calculating risk metrics & safety math"
+  }
+];
+
 const GEOGEBRA_IMAGES = [
   "/Activities/Using Geogebra Live Simulation/Pic 1.png",
   "/Activities/Using Geogebra Live Simulation/Pic 2.png",
@@ -43,6 +62,7 @@ const ALGO_TRADING_IMAGES = [
 
 const ClassroomActivities = () => {
   // Slideshow States
+  const [fireSafetyIdx, setFireSafetyIdx] = useState(0);
   const [geogebraIdx, setGeogebraIdx] = useState(0);
   const [presentationIdx, setPresentationIdx] = useState(0);
   const [algoIdx, setAlgoIdx] = useState(0);
@@ -58,8 +78,12 @@ const ClassroomActivities = () => {
     setter((prev) => (prev === 0 ? len - 1 : prev - 1));
   };
 
-  // Autoplay intervals to advance slides dynamically (slightly staggered for natural visual layout rhythm)
+  // Autoplay intervals to advance slides dynamically
   useEffect(() => {
+    const fireSafetyTimer = setInterval(() => {
+      setFireSafetyIdx((prev) => (prev + 1) % FIRE_SAFETY_AUDIT_IMAGES.length);
+    }, 2800);
+
     const algoTimer = setInterval(() => {
       setAlgoIdx((prev) => (prev + 1) % ALGO_TRADING_IMAGES.length);
     }, 2500);
@@ -73,6 +97,7 @@ const ClassroomActivities = () => {
     }, 3500);
 
     return () => {
+      clearInterval(fireSafetyTimer);
       clearInterval(algoTimer);
       clearInterval(presentationTimer);
       clearInterval(geogebraTimer);
@@ -88,6 +113,86 @@ const ClassroomActivities = () => {
           sticky
           className="mb-12 md:mb-16 mt-0"
         />
+
+        {/* FEATURED: Campus Fire Safety Audit & Applied Math */}
+        <Card className="flex flex-col border-border bg-card/60 backdrop-blur-sm overflow-hidden group shadow-md hover:shadow-lg transition-all duration-300 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+            <div className="relative aspect-[16/10] lg:aspect-auto lg:h-full lg:col-span-7 overflow-hidden border-b lg:border-b-0 lg:border-r border-border/30 bg-background/50">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={fireSafetyIdx}
+                  src={FIRE_SAFETY_AUDIT_IMAGES[fireSafetyIdx].src}
+                  alt={FIRE_SAFETY_AUDIT_IMAGES[fireSafetyIdx].caption}
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              </AnimatePresence>
+              
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 z-10">
+                <p className="text-white text-xs font-mono tracking-tight leading-snug">
+                  {FIRE_SAFETY_AUDIT_IMAGES[fireSafetyIdx].caption} ({fireSafetyIdx + 1} of {FIRE_SAFETY_AUDIT_IMAGES.length})
+                </p>
+              </div>
+              
+              {/* Slider Controls */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
+                onClick={() => prevSlide(FIRE_SAFETY_AUDIT_IMAGES.length, setFireSafetyIdx)}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/85 text-white rounded-full h-10 w-10 z-10"
+                onClick={() => nextSlide(FIRE_SAFETY_AUDIT_IMAGES.length, setFireSafetyIdx)}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+
+            <div className="lg:col-span-5 p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                    <ShieldCheck className="w-3 h-3" />
+                    Campus Experiential Audit
+                  </span>
+                </div>
+                <CardTitle className="text-2xl font-bold tracking-tight mb-3">
+                  Campus Fire Safety Audit & Spatial Math
+                </CardTitle>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Led a student group on a comprehensive hands-on campus fire safety audit. Students applied spatial geometry, perimeter ratios, volume coverage of fire extinguishers, and evacuation rate differential equations directly to campus blueprints and physical inspection zones.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono bg-secondary/35 p-3 rounded-xl border border-border/50">
+                <div className="flex items-center gap-1.5 text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                  Evacuation Rates
+                </div>
+                <div className="flex items-center gap-1.5 text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                  Extinguisher Radii
+                </div>
+                <div className="flex items-center gap-1.5 text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                  Spatial Coordinates
+                </div>
+                <div className="flex items-center gap-1.5 text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                  Risk Metric Models
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
 
         {/* TOP ROW: Hands-on Projects & Cross-Dept Work */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">          

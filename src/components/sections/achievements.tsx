@@ -24,6 +24,15 @@ type AchievementItem = {
 const ACHIEVEMENTS: AchievementItem[] = [
   // --- MAJOR AWARDS ---
   {
+    id: 36,
+    title: "Sunfest.live Ecosystem Impact",
+    issuer: "Sunbeam School Group & Associate Branches",
+    description: "Intensively deployed live score telemetry platform used by students, parents, teachers, school management, and all associate branches of Sunbeam.",
+    icon: <Globe className="w-8 h-8 text-cyan-400" />,
+    color: "from-cyan-500/10 to-cyan-500/5",
+    images: ["/Sunfest_Live_QR_Poster.png"],
+  },
+  {
     id: 1,
     title: "Drishtikone Award",
     issuer: "Pedagogical Excellence Initiative",

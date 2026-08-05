@@ -2,7 +2,7 @@ import AceTernityLogo from "@/components/logos/aceternity";
 import SlideShow from "@/components/slide-show";
 import { Button } from "@/components/ui/button";
 import { TypographyH3, TypographyP } from "@/components/ui/typography";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, FileText, QrCode, Download, Users, Building2, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { SiThreedotjs } from "react-icons/si";
@@ -476,8 +476,8 @@ const projects: Project[] = [
   },
   {
     id: "live_score",
-    category: "Event Administration",
-    title: "Scoreboard Live",
+    category: "Event Administration & Ecosystem Impact",
+    title: "Scoreboard Live (Sunfest.live)",
     src: `${BASE_PATH}/live_score.png`,
     bg: "/assets/backgrounds/storekit.jpg",
     screenshots: ["live_score.png"],
@@ -497,20 +497,68 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono text-2xl text-center">
-            Real-time scoring dashboard for quizzes and school competitions.
+            Real-time scoring dashboard used intensively across Sunbeam Schools.
           </TypographyP>
-          <TypographyP className="font-mono ">
-            A lightweight database dashboard displaying scoreboard results. Developed to handle live scoring 
-            for the Sunbeam Biztech Quiz and inter-house events, showing points instantly to spectators.
+          <TypographyP className="font-mono">
+            Sunfest.live was designed and deployed as an ecosystem-wide live telemetry & scoring platform. 
+            It was used intensively during major inter-school competitions, quizzes, and annual fests, 
+            empowering <strong>students, parents, teachers, school management, and all associate branches of Sunbeam</strong> 
+            with real-time standings and instant result updates.
           </TypographyP>
-          <ProjectsLinks live={this.live} />
           
-          <TypographyH3 className="my-4 mt-8">Real-time Telemetry</TypographyH3>
-          <p className="font-mono mb-2">
+          <div className="flex flex-wrap items-center gap-3 my-4">
+            <ProjectsLinks live={this.live} />
+            <Link
+              href="/Sunfest_Usage_Report.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono font-bold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-sm transition-colors my-3 mb-8"
+            >
+              <FileText className="w-4 h-4" />
+              View Official Usage Report (PDF)
+              <Download className="w-3.5 h-3.5 ml-1" />
+            </Link>
+          </div>
+
+          <TypographyH3 className="my-4 mt-6">Ecosystem Impact & Multi-Branch Reach</TypographyH3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
+            <div className="p-3.5 rounded-xl bg-primary/10 border border-primary/20 flex items-start gap-3">
+              <Building2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-xs uppercase font-mono text-foreground">Multi-Branch Adoption</h4>
+                <p className="text-xs text-muted-foreground mt-0.5">Deployed across all associate branches of Sunbeam School Group for synchronized live tracking.</p>
+              </div>
+            </div>
+            <div className="p-3.5 rounded-xl bg-primary/10 border border-primary/20 flex items-start gap-3">
+              <Users className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-xs uppercase font-mono text-foreground">360° Community Access</h4>
+                <p className="text-xs text-muted-foreground mt-0.5">Seamlessly served students, parents, teachers, and school leadership on mobile and desktop.</p>
+              </div>
+            </div>
+          </div>
+
+          <TypographyH3 className="my-4 mt-8">Real-Time Telemetry & Architecture</TypographyH3>
+          <p className="font-mono mb-4">
             Powered by WebSockets and Firebase. Scoring admins input results through a secured panel, 
             which instantly pushes visual updates, rank calculations, house tallies, and celebratory sound effects 
-            to main projector screens.
+            to main projector screens and thousands of mobile devices simultaneously.
           </p>
+
+          <TypographyH3 className="my-4 mt-8">Official Sunfest.live QR Poster Showcase</TypographyH3>
+          <div className="relative rounded-2xl overflow-hidden border border-border bg-card/60 p-4 flex flex-col items-center gap-3 shadow-md">
+            <div className="relative w-full max-w-lg aspect-[3/4] overflow-hidden rounded-xl border border-border/50">
+              <img
+                src="/Sunfest_Live_QR_Poster.png"
+                alt="Sunfest Live Official QR Poster"
+                className="w-full h-full object-contain bg-black/80"
+              />
+            </div>
+            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+              <QrCode className="w-4 h-4 text-primary" />
+              <span>Scan or view the official Sunfest Live QR event poster distributed across branches</span>
+            </div>
+          </div>
         </div>
       );
     },
